@@ -27,5 +27,6 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
+
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
