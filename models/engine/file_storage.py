@@ -1,7 +1,13 @@
 #!/usr/bin/python3
 """Class that serializes and deserializes JSON file to instances"""
 import json
-
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 class FileStorage:
     """class that handles serialization and deserialization"""
@@ -23,16 +29,25 @@ class FileStorage:
             serialized_objs[key] = obj.to_dict()
 
         with open(self.__file_path, 'w') as f:
-            json.dump(serialized_objs, f)
+            json.dump(serialized_objs, f, indent = 4)
 
     def reload(self):
         """method that deserializes the JSON file to __objects"""
-        from models.base_model import BaseModel
-        objeto = BaseModel()
+        classes = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Place": Place,
+            "Amenity": Amenity,
+            "Review": Review
+        }
         try:
-            with open("self.__file_path", "r", encoding="utf-8") as f:
+            with open(FileStorage.__file_path, 'r') as f:
                 serialized_objs = json.load(f)
-                for k, v in serialized_objs.items():
-                    objeto.__init__(*k, **v)
+                for v in serialized_objs.values():
+                    classname = v["__class__"]
+                    self.new(classes[classname](**v))
+
         except FileNotFoundError:
             pass
