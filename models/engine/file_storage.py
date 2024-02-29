@@ -27,3 +27,12 @@ class FileStorage:
 
     def reload(self):
         """method that deserializes the JSON file to __objects"""
+        from models.base_model import BaseModel
+        objeto = BaseModel()
+        try:
+            with open("self.__file_path", "r", encoding="utf-8") as f:
+                serialized_objs = json.load(f)
+                for k, v in serialized_objs.items():
+                    objeto.__init__(*k, **v)
+        except FileNotFoundError:
+            pass
