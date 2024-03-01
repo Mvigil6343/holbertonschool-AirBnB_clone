@@ -5,7 +5,8 @@ import cmd
 
 class HBNBCommand(cmd.Cmd):
     """Contains the functionality for the HBNB console"""
-    prompt = '(hbnb)'
+    # determines prompt for interactive/non-interactive modes
+    prompt = '(hbnb)' if sys.__stdin__.isatty() else ''
 
     def do_quit(self, command):
         """Method to exit the HBNB console"""
