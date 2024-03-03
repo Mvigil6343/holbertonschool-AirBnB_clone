@@ -20,7 +20,8 @@ class FileStorage:
 
     def new(self, obj):
         """method that sets in <__objects> the object <obj>"""
-        self.__objects[f"{type(obj).__name__}.{obj.id}"] = obj
+        new_obj = obj.__class__.__name__
+        self.__objects["{}.{}".format(new_obj, obj.id)] = obj
 
     def save(self):
         """method that serializes <__objects> to a JSON file"""
