@@ -2,8 +2,9 @@
 """ Console Module """
 import cmd
 import sys
-from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
+from models.__init__ import storage
+from models.engine.file_storage import FileStorage
 from models.state import State
 from models.city import City
 from models.review import Review
@@ -32,7 +33,7 @@ class HBNBCommand(cmd.Cmd):
 
     def help_quit(self):
         """Prints the help documentation for quit"""
-        print("Exits the program with formatting")
+        print("Quit command to exit the program")
 
     def do_EOF(self, arg):
         """Handles EOF to exit program"""
@@ -54,18 +55,21 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseModel"""
         if not arg:
             print("**class name missing**")
+            return
 
         arg_list = arg.split()
         class_name = arg_list[0]
 
         if class_name not in HBNBCommand.classes:
             print("**class doesn't exist**")
-        else:
-            for k, v in self.__classes.items():
-                if k == arg:
-                    instance = self.classes[k](v)
-                    FileStorage.save(instance)
+            return
+
+        for class_name, class_instance in HBNBCommand.classes.items():
+            if class_name == arg:
+                instance = class_instance()
+                storage.save(instance)
             print(f"{instance.id}")
+            break
 
     def help_create(self):
         """Prints the help documentation for create"""
@@ -75,20 +79,21 @@ class HBNBCommand(cmd.Cmd):
         """Prints the string representation of an instance"""
         if not arg:
             print("**class name missing**")
+            return
         else:
             args = arg.split()
-            if args[0] not in self.classes:
-               print("**class doesn't exist**")
-            elif len(args) <2:
-              print("**instance id missing**")
+            if args[0] not in HBNBCommand.classes:
+                print("**class doesn't exist**")
+            elif len(args) < 2:
+                print("**instance id missing**")
             else:
-                key = args[0] + "." + args[1]
+                key = args[0] + " . " + args[1]
                 new_dic = storage.all()
                 if key in new_dic:
                     print(new_dic[key])
                 else:
                     print("**no instance found**")
-   
+
     def help_show(self):
         """Prints the help documentation for show"""
         print("Prints the string representation of an instance")
@@ -100,9 +105,9 @@ class HBNBCommand(cmd.Cmd):
         else:
             args = arg.split()
             if args[0] not in self.classes:
-               print("**class doesn't exist**")
-            elif len(args) <2:
-              print("**instance id missing**")
+                print("**class doesn't exist**")
+            elif len(args) < 2:
+                print("**instance id missing**")
             else:
                 key = args[0] + "." + args[1]
                 new_dic = storage.all()
@@ -117,6 +122,24 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Prints all string representation of all instances"""
+        all_objects = storage.all()
+        instances_list = []
+
+        if not arg:
+            for key, value in all_objects.items():
+                instances_list.append(str(value))
+        else:
+            class_name = arg.split()[0]
+            if class_name not in HBNBCommand.classes:
+                print("** class doesn't exist **")
+                return
+
+            for key, value in all_objects.items():
+                obj_class_name = key.split(".")[0]
+                if obj_class_name == class_name:
+                    instances_list.append(str(value))
+
+        print(instances_list)
 
     def help_all(self):
         """Prints the help documentation for all"""

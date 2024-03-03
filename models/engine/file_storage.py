@@ -23,7 +23,7 @@ class FileStorage:
         new_obj = obj.__class__.__name__
         self.__objects["{}.{}".format(new_obj, obj.id)] = obj
 
-    def save(self):
+    def save(self, arg):
         """method that serializes <__objects> to a JSON file"""
         serialized_objs = {}
         for key, obj in self.__objects.items():
