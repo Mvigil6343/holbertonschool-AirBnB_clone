@@ -16,7 +16,7 @@ from models.place import Place
 class HBNBCommand(cmd.Cmd):
     """Contains the functionality for the HBNB console"""
     # determines prompt for interactive/non-interactive modes
-    prompt = '(hbnb)'
+    prompt = '(hbnb)' 
 
     classes = {
             "BaseModel": BaseModel,
@@ -158,8 +158,52 @@ class HBNBCommand(cmd.Cmd):
         """Prints the help documentation for all"""
         print("Prints all string representation of all instances")
 
-    def do_update(self):
+    def do_update(self, arg):
         """Updates an instance based on the class name and id"""
+        class_n = class_id = att_name = att_val = kwargs = '' 
+
+        # individual cls from id/args
+        arg = arg.partition(" ")
+        if arg[0]:
+            class_n = arg[0]
+        else: # class name not present
+            print("** class name missing **")
+            return
+        if class_n not in self.classes: # class name invalid
+            print("** class doesn't exist **")
+            return
+
+        # individual id from args
+        arg = arg[2].partition(" ")
+        if arg[0]:
+            class_id = arg[0]
+        else: # id not present
+            print("** instance id missing **")
+            return
+
+        key = class_n + "." + class_id
+
+        if key not in storage.all():
+            print("** no instance found **")
+            return
+        
+        for i, att_name in enumerate(arg):
+            if (i % 2 == 0):
+                att_val = arg[i + 1]
+            
+            if not att_name:
+                print("** attribute name missing **")
+                return
+            if not att_val:
+                print("** value missing **")
+                return
+            else:
+                content = arg[2]
+            
+                element = storage.all()[key]
+                element.__setattr__(arg[1], content)
+                element.save()
+
 
     def help_update(self):
         """Prints the help documentation for update"""
