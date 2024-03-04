@@ -55,14 +55,14 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, arg):
         """Creates a new instance of BaseModel"""
         if not arg:
-            print("**class name missing**")
+            print("** class name missing **")
             return
 
         arg_list = arg.split()
         class_name = arg_list[0]
 
         if class_name not in HBNBCommand.classes:
-            print("**class doesn't exist**")
+            print("** class doesn't exist **")
             return
 
         for class_name, class_instance in HBNBCommand.classes.items():
@@ -78,22 +78,34 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """Prints the string representation of an instance"""
-        if not arg:
-            print("**class name missing**")
+        new = arg.partition(" ") 
+        class_n = new[0]
+        class_id = new[2]
+
+        if class_id and ' ' in class_id:
+            class_id = class_id.partition(' ')[0]
+            
+
+        if not class_n:
+            print("** class name missing **")
             return
-        else:
-            args = arg.split()
-            if args[0] not in HBNBCommand.classes:
-                print("**class doesn't exist**")
-            elif len(args) < 2:
-                print("**instance id missing**")
-            else:
-                key = args[0] + " . " + args[1]
-                new_dic = storage.all()
-                if key in new_dic:
-                    print(new_dic[key])
-                else:
-                    print("**no instance found**")
+
+        if class_n not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
+
+        if not class_id:
+            print("** instance id missing **")
+            return
+        
+        key = class_n + "." + class_id
+        
+        try:
+            print(storage._FileStorage__objects[key])
+        except KeyError:
+                print("** no instance found **")
+
+        
 
     def help_show(self):
         """Prints the help documentation for show"""
@@ -102,20 +114,20 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
         if not arg:
-            print("**class name missing**")
+            print("** class name missing **")
         else:
-            args = arg.split()
-            if args[0] not in self.classes:
-                print("**class doesn't exist**")
-            elif len(args) < 2:
-                print("**instance id missing**")
+            arg = arg.split()
+            if arg[0] not in self.classes:
+                print("** class doesn't exist **")
+            elif len(arg) < 2:
+                print("** instance id missing **")
             else:
-                key = args[0] + "." + args[1]
+                key = arg[0] + "." + arg[1]
                 new_dic = storage.all()
                 if key in new_dic:
                     del new_dic[key]
                 else:
-                    print("**no instance found**")
+                    print("** no instance found **")
 
     def help_destroy(self):
         """Prints the help documentation for destroy"""
@@ -127,10 +139,10 @@ class HBNBCommand(cmd.Cmd):
         instances_list = []
 
         if not arg:
-            for key, value in all_objects.items():
+            for key, value in HBNBCommand.classes:
                 instances_list.append(str(value))
         else:
-            class_name = arg.split()[0]
+            class_name = arg.split(' ')[0]
             if class_name not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
