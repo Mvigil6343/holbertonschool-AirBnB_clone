@@ -38,6 +38,8 @@ class BaseModel:
     def to_dict(self):
         """returns a dictionary containing all keys/values"""
         dicti = self.__dict__.copy()
+        dicti.update({'__class__':
+                          (str(type(self)).split('.')[-1]).split('\'')[0]})
         dicti["__class__"] = type(self).__name__
         dicti["created_at"] = self.created_at.isoformat()
         dicti["updated_at"] = self.updated_at.isoformat()
