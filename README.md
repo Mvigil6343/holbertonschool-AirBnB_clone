@@ -2,9 +2,8 @@
 This repository contains the initial stage of a student project to build a clone of the AirBnB website. This stage implements a backend interface, or console, to manage program data. Console commands allow the user to create, update, and destroy objects, as well as manage file storage. Using a system of JSON serialization/deserialization, storage is persistent between sessions.
 ---
 <center><h3>Repository Contents by Project Task</h3> </center>
-<b>
-| Tasks | Files | Description |
-</b>
+
+<p>| Tasks | Files | Description |</p>
 | ----- | ----- | ------ |
 | 0: Authors/README File | [AUTHORS](https://github.com/Mvigil6343/holbertonschool-AirBnB_clone/blob/main/AUTHORS) | Project authors |
 | 1: Pep8 | N/A | All code is pep8 compliant|
@@ -14,8 +13,7 @@ This repository contains the initial stage of a student project to build a clone
 | 5. Create FileStorage class | [/models/engine/file_storage.py](https://github.com/Mvigil6343/holbertonschool-AirBnB_clone/blob/main/models/engine/file_storage.py) [/models/_ _init_ _.py](https://github.com/Mvigil6343/holbertonschool-AirBnB_clone/blob/main/models/__init__.py)  [/models/base_model.py](https://github.com/Mvigil6343/holbertonschool-AirBnB_clone/blob/main/models/base_model.py) | Defines a class to manage persistent file storage system|
 | 6. Console 0.0.1 | [console.py](https://github.com/Mvigil6343/holbertonschool-AirBnB_clone/blob/main/console.py) | Add basic functionality to console program, allowing it to quit, handle empty lines and ^D |
 | 7. Console 0.1 | [console.py](https://github.com/Mvigil6343/holbertonschool-AirBnB_clone/blob/main/console.py) | Update the console with methods allowing the user to create, destroy, show, and update stored data |
-<br>
-<br>
+
 <center> <h2>General Use</h2> </center>
 1. First clone this repository.
 3. Once the repository is cloned locate the "console.py" file and run it as follows:
