@@ -113,6 +113,6 @@ This repository contains the initial stage of a student project to build a clone
 ```
 <br>
 <h1>AUTHORS</h1>
-<p>Giselle Nieves - Holberton Student - <a href="https://github.com/Gisezegk" Gise> </a></p>
-<p>Marcos Vigil - Holberton Student - <a href="https://github.com/Mvigil6343" Marcos></a></p>
-<p>Anit Rodriguez - Holberton Student - <a href="https://github.com/AnitRodriguez" Anit></a></p>
+<p>Giselle Nieves - Holberton Student - <a href="https://github.com/Gisezegk"> Gise</a></p>
+<p>Marcos Vigil - Holberton Student - <a href="https://github.com/Mvigil6343"> Marcos</a></p>
+<p>Anit Rodriguez - Holberton Student - <a href="https://github.com/AnitRodriguez"> Anit</a></p>
